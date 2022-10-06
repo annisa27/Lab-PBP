@@ -29,7 +29,7 @@
 <h1 style="font-family: Dancing Script; margin: 20px;">Let's make your wish come true! 🤩</h1>
 <p>Sesi terakhir login: {{ last_login }}</p>
 
-<table class="table" style="width: 70%; border: 2px; margin: 20px;">
+<table class="table" style="width: 70%; border: 2px; margin: 20px;" id="wishlist-table">
     <tr class="bg-primary" style="color:#fff; text-decoration: none;  border: 2px;">
         <th>Nama Barang</th>
         <th>Harga Barang</th>
@@ -45,5 +45,26 @@
 </table>
 </div>
 </body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+   $(document).ready(function(){
+      $("button").click(function(){
+        $.get("{% url 'wishlist:show_json' %}", function(data) {
+            $.each(data, function (index, value) {
+                $("#wishlist-table").append(
+                "<tr><td>" +
+                value.fields.nama_barang +
+                "</td><td>" +
+                value.fields.harga_barang +
+                "</td><td>" +
+                value.fields.deskripsi +
+                "</td></tr>")
+        });
+      });
+    })
+});
+</script>
 
 {% endblock content %}
