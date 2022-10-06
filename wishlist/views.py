@@ -76,4 +76,11 @@ def logout_user(request):
     response.delete_cookie('last_login')
     return response
 
+@login_required(login_url='/wishlist/login/')
+def show_wishlist_ajax(request):
+    context = {
+        "nama": "Annisa",
+        "last_login": request.COOKIES.get("last_login"),
+    }
+    return render(request, "wishlist_ajax.html", context)
 
